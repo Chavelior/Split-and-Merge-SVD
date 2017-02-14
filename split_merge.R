@@ -27,6 +27,7 @@ split_merge <- function(X){
     U1 <- rbind(U1,xi.svd$u)        #Updating U bar matrix
     yi <- xi.svd$v %*% diag(xi.svd$d)     #Creating y=v*d
     Y <- rbind(Y,yi)                      #Updating the y matrix
+    i <- i+part_len
     }
     
     y.svd <- svd(Y)
