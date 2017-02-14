@@ -24,6 +24,12 @@ split_merge <- function(X){
       }
       
     xi.svd <- svd(xi)               #Performing svd on individual submatices
+    coly<-ncol(xi.svd$u)
+    subyup<-matrix(0,nrow(U1),ncol(xi.svd$u))
+    x1<-cbind(U1,subyup)
+    subydown<-matrix(0,nrow(xi.svd$u),ncol(U1))
+    subydowncom<-cbind(subydown,xi.svd$u)
+    fin<-rbind(x1,subydowncom)
     U1 <- rbind(U1,xi.svd$u)        #Updating U bar matrix
     yi <- xi.svd$v %*% diag(xi.svd$d)     #Creating y=v*d
     Y <- rbind(Y,yi)                      #Updating the y matrix
