@@ -1,8 +1,9 @@
 #R code for split-and-merge approach for Single Value Decomposition(SVD)
 # X is our data variable
 split_merge <- function(X){
-  m <- nrow(as.matrix(X))
+  
   x <- as.matrix(X)
+  m <- nrow(x)
   Y <- NULL               #Initializing the end Y matrix
   U1 <- NULL              #Initializing the U bar matrix form X
   xi <- NULL
