@@ -17,28 +17,39 @@ split_merge <- function(X){
   while ( i <= m ){
     
     if( i+part_len-1 < m ){
-      xi <- x[i:(i+part_len-1), ]
-      }
+      xi <- as.matrix(x[i:(i+part_len-1), ])
+    }
+    else if(i != m) {
+      xi <- as.matrix(x[i:m, ])
+    }
     else{
-      xi <- x[i:m,]
-      }
-      
-    xi.svd <- svd(xi)               #Performing svd on individual submatices
+      xi <-matrix((x[i,]), nrow = 1)
+    }
+    fin<-NULL
+    xi.svd <- svd(xi)                     #Performing svd on individual submatices
+    if(is.null(U1)){
+      fin<-xi.svd$u
+    }
+    else
+    {
     coly<-ncol(xi.svd$u)
-    subyup<-matrix(0,nrow(U1),ncol(xi.svd$u))
+    subyup<-matrix(0,nrow(U1),coly)
     x1<-cbind(U1,subyup)
     subydown<-matrix(0,nrow(xi.svd$u),ncol(U1))
     subydowncom<-cbind(subydown,xi.svd$u)
     fin<-rbind(x1,subydowncom)
-    U1 <- rbind(U1,xi.svd$u)        #Updating U bar matrix
-    yi <- xi.svd$v %*% diag(xi.svd$d)     #Creating y=v*d
+    }
+    U1 <- fin        #Updating U bar matrix
+    d<-diag(xi.svd$d, nrow = length(xi.svd$d))
+    yi <- d %*% t(xi.svd$v)    #Creating y=v*d
     Y <- rbind(Y,yi)                      #Updating the y matrix
     i <- i+part_len
-    }
-    
-    y.svd <- svd(Y)
-    X$u <- U1 %*% y.svd$u
-    X$v <- y.svd$v
-    X$d <- diag(y.svd$d)
+  }
+  
+  y.svd <- svd(as.matrix(Y))
+  X$u <- U1 %*% y.svd$u
+  X$v <- y.svd$v
+  X$d <- diag(y.svd$d, nrow = length(y.svd$d))
+  return(X)
     return(X)
     }
