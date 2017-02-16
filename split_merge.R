@@ -51,5 +51,5 @@ split_merge <- function(X){
   X$v <- y.svd$v
   X$d <- diag(y.svd$d, nrow = length(y.svd$d))
   return(X)
-    return(X)
+  
     }
