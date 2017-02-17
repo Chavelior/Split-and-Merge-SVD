@@ -1,5 +1,7 @@
 #R code for split-and-merge approach for Single Value Decomposition(SVD)
 # X is our data variable
+
+
 split_merge <- function(X){
   
   x <- as.matrix(X)
@@ -17,22 +19,22 @@ split_merge <- function(X){
   while ( i <= m ){
     
     if( i+part_len-1 < m ){
-      xi <- as.matrix(x[i:(i+part_len-1), ])
+      xi <- as.matrix(x[i:(i+part_len-1), ])       
     }
     else if(i != m) {
       xi <- as.matrix(x[i:m, ])
     }
     else{
-      xi <-matrix((x[i,]), nrow = 1)
+      xi <-matrix((x[i,]), nrow = 1)      
     }
     fin<-NULL
-    xi.svd <- svd(xi)                     #Performing svd on individual submatices
-    if(is.null(U1)){
+    xi.svd <- svd(xi)                     #Performing svd on individual submatrices
+    if(is.null(U1)){                      #When first submatrix is being used
       fin<-xi.svd$u
     }
-    else
+    else                                 #We need to add U matrices diagonally
     {
-    coly<-ncol(xi.svd$u)
+    coly<-ncol(xi.svd$u)                 #extending rows and columns by row binding and column binding
     subyup<-matrix(0,nrow(U1),coly)
     x1<-cbind(U1,subyup)
     subydown<-matrix(0,nrow(xi.svd$u),ncol(U1))
@@ -47,9 +49,10 @@ split_merge <- function(X){
   }
   
   y.svd <- svd(as.matrix(Y))
-  X$u <- U1 %*% y.svd$u
-  X$v <- y.svd$v
-  X$d <- diag(y.svd$d, nrow = length(y.svd$d))
+    #
+  svd(X)$u <- U1 %*% y.svd$u
+  svd(X)$v <- y.svd$v
+  svd(X)$d <- diag(y.svd$d, nrow = length(y.svd$d))
   return(X)
   
     }
