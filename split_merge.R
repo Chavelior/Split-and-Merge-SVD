@@ -9,7 +9,7 @@ split_merge <- function(X){
   Y <- NULL               #Initializing the end Y matrix
   U1 <- NULL              #Initializing the U bar matrix form X
   xi <- NULL
-  
+  X1 <- NULL
   #Forming sub-matrices from X by row slicing
   #Number of rows in each sub-matrirx has to be approximately same, so, I'm considering the root of intial rows in data
   i <- 1                    #Keeping track of rows in the original data
@@ -50,9 +50,9 @@ split_merge <- function(X){
   
   y.svd <- svd(as.matrix(Y))
     #
-  svd(X)$u <- U1 %*% y.svd$u
-  svd(X)$v <- y.svd$v
-  svd(X)$d <- diag(y.svd$d, nrow = length(y.svd$d))
+  X1$u <- U1 %*% y.svd$u
+  X1$v <- y.svd$v
+  X1$d <- diag(y.svd$d, nrow = length(y.svd$d))
   return(X)
   
     }
