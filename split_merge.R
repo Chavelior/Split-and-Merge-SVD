@@ -53,6 +53,6 @@ split_merge <- function(X){
   X1$u <- U1 %*% y.svd$u
   X1$v <- y.svd$v
   X1$d <- diag(y.svd$d, nrow = length(y.svd$d))
-  return(X)
+  return(X1)
   
     }
