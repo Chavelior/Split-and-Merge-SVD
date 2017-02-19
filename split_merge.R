@@ -49,10 +49,11 @@ split_merge <- function(X){
   }
   
   y.svd <- svd(as.matrix(Y))
-    #
+    #Assigning final matrices to a random variable to output.
   X1$u <- U1 %*% y.svd$u
   X1$v <- y.svd$v
   X1$d <- diag(y.svd$d, nrow = length(y.svd$d))
+   #Returning the three matrices through X1 
   X1
   
     }
